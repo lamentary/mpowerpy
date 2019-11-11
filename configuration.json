@@ -1,0 +1,12 @@
+{
+    "devices": [
+        {            
+            "friendly_name": "",
+            "user_name": "",
+            "password": "",
+            "ip_address": "",
+            "relays": [],
+            "measures": []
+        }
+    ]
+}
