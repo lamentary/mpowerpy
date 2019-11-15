@@ -1,18 +1,18 @@
 import tcpclient 
+from mDevice import mDevice
+from mRelay import mRelay
 
-ip = "192.168.1.999"
 port = 23
 username = 'ubnt'
 password = 'ubnt'
 
 loggedIn = False
 
-client = tcpclient.TcpClient(ip, port, username, password)
-response = client.send_command('ls\r\n')
-print (response)
-response = client.send_command('cd /dev\r\n')
-print (response)
-response = client.send_command('ls\r\n')
-print (response)
+mp8Client = tcpclient.TcpClient('192.168.1.217', port, username, password)
+mpminiClinet = tcpclient.TcpClient('192.168.1.215', port, username, password)
 
-client.sign_out()
+mp8 = mDevice(mp8Client)
+mpmini = mDevice(mpminiClinet)
+
+print (mp8.relays)
+print (mpmini.relays)

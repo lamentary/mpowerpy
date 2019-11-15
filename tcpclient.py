@@ -8,15 +8,17 @@ class TcpClient:
     username = ''
     password = ''
     isLoggedIn = False
-    connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    connection = {}
     
     def __init__(self, ip, port, username, password):
         self.ip = ip
         self.port = port
         self.username = username
         self.password = password
+        self.start_connection()
 
     def start_connection(self):     
+        self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s = self.connection
         s.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
         s.connect((self.ip, self.port))
@@ -43,36 +45,22 @@ class TcpClient:
             response = response + data.decode('utf-8', errors='replace')
             print('building initial server response: {0}'.format(response))
         
-        s.sendall(bytes(self.username + '\r\n', 'utf-8'))
-        data = s.recv(512)
-        response = data.decode('utf-8', errors='replace')
+        print('Sending login info: username')
+        response = self.get_results(self.username + '\r\n', 'Password')
 
-        while ('Password' not in response):
-            time.sleep(.1)
-            data = s.recv(512)
-            response = response + data.decode('utf-8', errors='replace')
-            print('building user name sent response: {0}'.format(response))
-
-        s.sendall(bytes(self.password + '\r\n', 'utf-8'))
-        data = s.recv(512)
-        response = data.decode('utf-8', errors='replace')
-
-        while ('#' not in response):
-            time.sleep(.1)
-            data = s.recv(512)
-            response = response + data.decode('utf-8', errors='replace')
-            print ('building password sent response: {0}'.format(response))
+        print('Sending login info: password')
+        self.get_results(self.password + '\r\n')
             
         print('logged in and waiting for response')
 
-    def send_command(self, command):
+    def send(self, command):
         logging.basicConfig(filename='tcp_client.log', level=logging.WARNING)
         s = self.connection
                 
         if ('\r\n' not in command):
             command = command + '\r\n'
 
-        print('Sending command "{0}"'.format(command.replace('\r\n','')))
+        #print('Sending command "{0}"'.format(command.replace('\r\n','')))
         try:
             s.sendall(b'\r\n')
             data = s.recv(512)
@@ -80,16 +68,24 @@ class TcpClient:
             print('An error occurred sending {0}: {1}'.format(command, sys.exc_info()[0]))
             self.start_connection()
         
+        result = self.get_results(command)
+        
+        return result.replace('MF.v2.1.11#','')
+        
+    def get_results(self, command, end_of_trans = '#'):
+        s = self.connection
+
         s.sendall(bytes(command, 'utf-8'))
         data = s.recv(512)
-        result = data.decode('utf-8', errors='replace')
+        response = data.decode('utf-8', errors='replace')
 
-        while ('#' not in result):
+        while (end_of_trans not in response):
+            time.sleep(.1)
             data = s.recv(512)
-            result = result + data.decode('utf-8', errors='replace')
-        
-        return result.replace('MF.v2.1.11#','Command processed.  Awaiting next command')
-        
+            response = response + data.decode('utf-8', errors='replace')
+
+        return response.replace(command,'')
+
     def sign_out(self):
         self.connection.close();
 
