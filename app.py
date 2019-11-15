@@ -10,7 +10,7 @@ loggedIn = False
 client = tcpclient.TcpClient(ip, port, username, password)
 response = client.send_command('ls\r\n')
 print (response)
-response = client.send_command('cd /dev/power\r\n')
+response = client.send_command('cd /dev\r\n')
 print (response)
 response = client.send_command('ls\r\n')
 print (response)
