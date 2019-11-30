@@ -26,7 +26,6 @@ class TelNetter:
         print (recvd)
         
     def send_command(self, cmd):    
-        #tn = self.connect(self.host, self.port, self.username, self.password)
         if self.tn.host is None:
             self.connect()
 
@@ -38,7 +37,6 @@ class TelNetter:
         print('Sent: {}'.format(cmd.replace('\n','')))
         resp = recvd.replace('{}'.format(self.COMMAND_PROMPT.decode('ascii')),'')  
         resp = resp.replace(cmd.replace('\n','').replace('\r',''), '')  
-        #tn.close()
 
         return resp.replace(cmd, '')
 
