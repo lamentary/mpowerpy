@@ -12,8 +12,7 @@ class TelNetter:
         self.host = host
         self.port = port
         self.username = username
-        self.password = password
-        
+        self.password = password        
 
     def connect(self):
         print('Logging in to {0}:{1}'.format(self.host, self.port))
@@ -56,5 +55,4 @@ class TelNetter:
             print(resp)
             self.get_command()
         else:
-            print('Done')
-            
+            print('Done')            
