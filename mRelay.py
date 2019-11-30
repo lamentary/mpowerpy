@@ -4,7 +4,7 @@ class mRelay:
 
     def get_relay_state(self, client):
         command = 'cat /proc/power/relay' + str(self.relay_number)
-        results = client.send(command)        
+        results = client.send_command(command).replace('\r','').replace('\n','')
         self.state = results[0]
         return self.state
 

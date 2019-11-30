@@ -1,18 +1,26 @@
-import tcpclient 
 from mDevice import mDevice
 from mRelay import mRelay
+from config import Config
+import json
 
 port = 23
 username = 'ubnt'
 password = 'ubnt'
 
-loggedIn = False
+config = Config()
 
-mp8Client = tcpclient.TcpClient('192.168.1.217', port, username, password)
-mpminiClinet = tcpclient.TcpClient('192.168.1.215', port, username, password)
+print('Loading configuration')
+config.load()
 
-mp8 = mDevice(mp8Client)
-mpmini = mDevice(mpminiClinet)
-
-print (mp8.relays)
-print (mpmini.relays)
+if (len(config.devices) == 0):
+    print('No devices found, creating devices')
+    mp8 = mDevice('MPower Pro 8',"192.168.1.217", 23, username, password)
+    mpmini = mDevice('MPower Mini',"192.168.1.215", 23, username, password)
+    mp8.save_password = True
+    mpmini.save_password = True
+    devices = config.devices
+    devices.append(mp8)
+    devices.append(mpmini)
+    config.save()
+else:
+    print('{0} devices loaded.'.format(len(config.devices)))
