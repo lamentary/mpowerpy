@@ -3,7 +3,6 @@ from mRelay import mRelay
 from config import Config
 import json
 
-port = 23
 username = 'ubnt'
 password = 'ubnt'
 
@@ -14,8 +13,8 @@ config.load()
 
 if (len(config.devices) == 0):
     print('No devices found, creating devices')
-    mp8 = mDevice('MPower Pro 8',"192.168.1.217", 23, username, password)
-    mpmini = mDevice('MPower Mini',"192.168.1.215", 23, username, password)
+    mp8 = mDevice('MPower Pro 8',"192.168.1.217", username, password)
+    mpmini = mDevice('MPower Mini',"192.168.1.215", username, password)
     mp8.save_password = True
     mpmini.save_password = True
     devices = config.devices
