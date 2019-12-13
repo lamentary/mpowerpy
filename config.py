@@ -11,7 +11,7 @@ class Config:
                 data = json.load(config)
                 
                 for dev in data['devices']:
-                    md = mDevice(dev['name'], dev['host'], dev['port'], dev['username'], dev['password'])
+                    md = mDevice(dev['name'], dev['host'], dev['username'], dev['password'])
                     self.devices.append(md)
                     
 

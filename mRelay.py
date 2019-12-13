@@ -1,6 +1,16 @@
 class mRelay:
-    relay_number = 0
-    state = 0
+    port = 0
+    id = ''
+    label = ''
+    model = ''
+    output = 0
+    power = 0.00
+    enabled  = 0
+    current = 0.00
+    voltage = 0.00
+    powerfactor = 0.00
+    relay = 0
+    lock = 0
 
     def get_relay_state(self, client):
         command = 'cat /proc/power/relay' + str(self.relay_number)
