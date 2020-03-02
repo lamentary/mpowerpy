@@ -1,2 +1,2 @@
 # mpowerpy
-Controller for Ubiquiti MPower switches in Python
+Controller for Ubiquiti MFi MPower switches in Python
