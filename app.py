@@ -1,6 +1,6 @@
-from mDevice import mDevice
-from mRelay import mRelay
-from config import Config
+from mfi.mDevice import mDevice
+from mfi.mRelay import mRelay
+from config.config import Config
 import json
 
 username = 'ubnt'
@@ -23,3 +23,8 @@ if (len(config.devices) == 0):
     config.save()
 else:
     print('{0} devices loaded.'.format(len(config.devices)))
+
+    for device in config.devices:
+        print('Getting information for "{}"'.format(device.name))
+        mp = mDevice(device.name, device.host, device.username, device.password)
+        print (mp.print_relay_states())

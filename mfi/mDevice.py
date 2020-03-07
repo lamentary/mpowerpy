@@ -1,6 +1,6 @@
-from mRelay import mRelay
-import webrequest
-import telnetclient
+from mfi.mRelay import mRelay
+import comm.webrequest
+import comm.telnetclient
 import getpass
 import json
 import time
@@ -19,7 +19,7 @@ class mDevice:
         self.host = host
         self.username = username
         self.password = password
-        self.cnx = webrequest.Requester(host, username, password)
+        self.cnx = comm.webrequest.Requester(host, username, password)
         self.relays = []
 
         if (autoinitialize):
@@ -87,7 +87,7 @@ class mDevice:
             "name": self.name,
             "host": self.host,
             "username": self.username,
-            "password": '',
+            "password": self.password,
             "relays": len(self.relays)
         }
 
@@ -97,25 +97,25 @@ class mDevice:
         return json
                 
 
-def print_relay_states(d):
-    for relay in d.relays:
-        if (relay.relay == 1):
-            state = 'ON'
-        else:
-            state = 'OFF'   
-        print('Relay {0} state: {1}'.format(relay.port, state))
+    def print_relay_states(self):
+        for relay in self.relays:
+            if (relay.relay == 1):
+                state = 'ON'
+            else:
+                state = 'OFF'   
+            print('Relay {0} state: {1}'.format(relay.port, state))
 
 if __name__ == '__main__':
     d = mDevice('Mini', '192.168.1.217', 'ubnt', 'ubnt')
     print('Found {} relays'.format(len(d.relays)))    
     print('Turning all relays off')
     print('After command: ' + d.change_relay_state(0, 0))    
-    print_relay_states(d)
+    d.print_relay_states()
     print(d.cnx.get_general_info())
     print('Turning all relays on')
     print('After command: ' + d.change_relay_state(0, 1))    
     print(d.cnx.get_general_info())
-    print_relay_states(d)
+    d.print_relay_states()
 
 
     
