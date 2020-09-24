@@ -4,10 +4,7 @@ from http import cookies
 import json
 
 class Requester:
-    cookie_value = 'AIROS_SESSIONID=01234567890123456789012345678902'
-    ip = ''
-    username = ''
-    password = ''
+    cookie_value = 'AIROS_SESSIONID=01234567890123456789012345678902'    
 
     def __init__(self, ip, username, password):
         self.ip = ip
