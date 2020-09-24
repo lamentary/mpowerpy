@@ -7,12 +7,7 @@ import time
 
 class mDevice:
     cnx = {}
-    name = ''
-    host = ''
-    username = ''
-    password = ''
     save_password = False
-    relays = []
 
     def __init__(self, name, host, username, password, autoinitialize = True):    
         self.name = name
