@@ -1,16 +1,18 @@
 class mRelay:
-    port = 0
-    id = ''
-    label = ''
-    model = ''
-    output = 0
-    power = 0.00
-    enabled  = 0
-    current = 0.00
-    voltage = 0.00
-    powerfactor = 0.00
-    relay = 0
-    lock = 0
+    
+    def __init__(self):
+        self.port = 0
+        self.id = ''
+        self.label = ''
+        self.model = ''
+        self.output = 0
+        self.power = 0.00
+        self.enabled  = 0
+        self.current = 0.00
+        self.voltage = 0.00
+        self.powerfactor = 0.00
+        self.relay = 0
+        self.lock = 0
 
     def get_relay_state(self, client):
         command = 'cat /proc/power/relay' + str(self.relay_number)
