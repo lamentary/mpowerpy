@@ -1,11 +1,7 @@
 from telnetlib import Telnet
 
 class TelNetter:
-    COMMAND_PROMPT = b'MF.v2.1.11# '
-    host = ''
-    port = 0
-    username = ''
-    password = ''
+    COMMAND_PROMPT = b'MF.v2.1.11# '    
     tn = Telnet()
 
     def __init__(self, host, port, username, password):
